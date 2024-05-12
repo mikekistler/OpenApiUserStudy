@@ -1,6 +1,10 @@
 @OpenApiUserStudy_HostAddress = http://localhost:5112
 
-GET {{OpenApiUserStudy_HostAddress}}/weatherforecast/
+GET {{OpenApiUserStudy_HostAddress}}/openapi/v1.json
+
+###
+
+GET {{OpenApiUserStudy_HostAddress}}/todos
 Accept: application/json
 
 ###
