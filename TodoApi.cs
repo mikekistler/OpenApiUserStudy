@@ -19,7 +19,6 @@ internal static class TodosApi
             return TypedResults.Ok(todos.Values.ToArray());
         });
 
-
         group.MapGet("/{id}", Results<Ok<Todo>, NotFound<ProblemDetails>> (int id) =>
         {
             if (todos.ContainsKey(id))
