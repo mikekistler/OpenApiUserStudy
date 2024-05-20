@@ -10,7 +10,14 @@ builder.Services.ConfigureHttpJsonOptions(options =>
     options.SerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
 });
 
+// Convert exceptions to problem details responses
+// ref: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/error-handling#problem-details
+builder.Services.AddProblemDetails();
+
 var app = builder.Build();
+
+app.UseExceptionHandler();
+app.UseStatusCodePages();
 
 app.UseHttpsRedirection();
 

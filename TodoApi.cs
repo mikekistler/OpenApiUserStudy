@@ -14,34 +14,36 @@ internal static class TodosApi
 
         group.WithTags("Todos");
 
-        group.MapGet("/", () =>
+        group.MapGet("/", Ok<Todo[]> () =>
         {
-            return Results.Ok(todos);
+            return TypedResults.Ok(todos.Values.ToArray());
         });
 
-        group.MapGet("/{id}", (int id) =>
+
+        group.MapGet("/{id}", Results<Ok<Todo>, NotFound<ProblemDetails>> (int id) =>
         {
-            if (!todos.ContainsKey(id))
+            if (todos.ContainsKey(id))
             {
-                return Results.NotFound();
+                return TypedResults.Ok(todos[id]);
             }
-            return Results.Ok(todos[id]);
+            return TypedResults.NotFound<ProblemDetails>(null);
         });
 
-        group.MapPut("/{id}", (int id, Todo Todo) =>
+        group.MapPut("/{id}", Results<Ok<Todo>, Created<Todo>> (int id, Todo Todo) =>
         {
+            bool exists = todos.ContainsKey(id);
             todos[id] = Todo;
-            return Results.Ok(Todo);
+            return exists ? TypedResults.Ok(Todo) : TypedResults.Created($"/{id}", Todo);
         });
 
-        group.MapDelete("/{id}", (int id) =>
+        group.MapDelete("/{id}", Results<NoContent, NotFound<ProblemDetails>> (int id) =>
         {
-            if (!todos.ContainsKey(id))
+            if (todos.ContainsKey(id))
             {
-                return Results.NotFound();
+                todos.Remove(id);
+                return TypedResults.NoContent();
             }
-            todos.Remove(id);
-            return Results.NoContent();
+            return TypedResults.NotFound<ProblemDetails>(null);
         });
 
         return group;
