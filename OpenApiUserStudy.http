@@ -1,10 +1,30 @@
 @OpenApiUserStudy_HostAddress = http://localhost:5112
 
-GET {{OpenApiUserStudy_HostAddress}}/openapi/v1.json
-
-###
+### List all todos
 
 GET {{OpenApiUserStudy_HostAddress}}/todos
 Accept: application/json
 
-###
+### Get a todo
+
+GET {{OpenApiUserStudy_HostAddress}}/todos/2
+Accept: application/json
+
+### Create a todo
+
+PUT {{OpenApiUserStudy_HostAddress}}/todos/3
+Content-Type: application/json
+{
+  "id": 3,
+  "title": "Mow the lawn",
+  "content": "Mow the lawn and trim the edges",
+  "dueOn": "Next Saturday"
+}
+
+### Delete a todo
+
+DELETE {{OpenApiUserStudy_HostAddress}}/todos/2
+
+### Get OpenAPI definition
+
+GET {{OpenApiUserStudy_HostAddress}}/openapi/v1.json
