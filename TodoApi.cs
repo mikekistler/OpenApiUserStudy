@@ -15,11 +15,13 @@ internal static class TodosApi
 
         group.WithTags("Todos");
 
+        // List all todos
         group.MapGet("/", Ok<Todo[]> () =>
         {
             return TypedResults.Ok(todos.Values.ToArray());
         });
 
+        // Get a specific todo by id
         group.MapGet("/{id}", Results<Ok<Todo>, NotFound<ProblemDetails>> (int id) =>
         {
             if (todos.ContainsKey(id))
@@ -29,6 +31,7 @@ internal static class TodosApi
             return TypedResults.NotFound<ProblemDetails>(null);
         });
 
+        // Create or replace a new todo
         group.MapPut("/{id}", Results<Ok<Todo>, Created<Todo>> (int id, Todo Todo) =>
         {
             bool exists = todos.ContainsKey(id);
@@ -36,6 +39,7 @@ internal static class TodosApi
             return exists ? TypedResults.Ok(Todo) : TypedResults.Created($"/{id}", Todo);
         });
 
+        // Delete a todo
         group.MapDelete("/{id}", Results<NoContent, NotFound<ProblemDetails>> (int id) =>
         {
             if (todos.ContainsKey(id))

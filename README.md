@@ -19,6 +19,8 @@ start devenv
 Using the [documentation], update the project to serve the
 OpenAPI document at the `/openapi/v1.json` endpoint.
 
+
+
 ## Add build-time generation of OpenAPI definition
 
 Add the [`ApiDescription.Server`] package.
