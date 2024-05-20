@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    options.AddServer(new OpenApiServer { Url = "http://localhost:5207", Description = "Localhost" });
+    options.AddServer(new OpenApiServer { Url = "http://localhost:5112", Description = "Localhost" });
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
@@ -33,7 +33,7 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 });
 
 // Convert exceptions to problem details responses
-// ref: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/error-handling?view=aspnetcore-8.0#problem-details
+// ref: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/error-handling#problem-details
 builder.Services.AddProblemDetails();
 
 var app = builder.Build();

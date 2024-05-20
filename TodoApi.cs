@@ -29,11 +29,11 @@ internal static class TodosApi
 
         group.MapGet("/{id}", Results<Ok<Todo>, NotFound<ProblemDetails>> (int id) =>
         {
-            if (!todos.ContainsKey(id))
+            if (todos.ContainsKey(id))
             {
-                return TypedResults.NotFound<ProblemDetails>(null);
+                return TypedResults.Ok(todos[id]);
             }
-            return TypedResults.Ok(todos[id]);
+            return TypedResults.NotFound<ProblemDetails>(null);
         })
         .WithName("GetTodo")
         .WithOpenApi(operation =>
@@ -44,7 +44,7 @@ internal static class TodosApi
             return operation;
         });
 
-        group.MapPut("/{id}", Results<Ok<Todo>, Created<Todo>>  (int id, Todo Todo) =>
+        group.MapPut("/{id}", Results<Ok<Todo>, Created<Todo>> (int id, Todo Todo) =>
         {
             bool exists = todos.ContainsKey(id);
             todos[id] = Todo;
