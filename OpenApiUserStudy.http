@@ -25,7 +25,3 @@ Content-Type: application/json
 ### Delete a todo
 
 DELETE {{OpenApiUserStudy_HostAddress}}/todos/2
-
-### Get OpenAPI definition
-
-GET {{OpenApiUserStudy_HostAddress}}/openapi/v1.json
