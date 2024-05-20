@@ -14,6 +14,8 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 // ref: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/error-handling#problem-details
 builder.Services.AddProblemDetails();
 
+builder.Services.AddOpenApi();
+
 var app = builder.Build();
 
 app.UseExceptionHandler();
@@ -22,5 +24,7 @@ app.UseStatusCodePages();
 app.UseHttpsRedirection();
 
 app.MapTodos();
+
+app.MapOpenApi();
 
 app.Run();
