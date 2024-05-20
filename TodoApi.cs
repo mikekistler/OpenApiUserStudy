@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 
 internal static class TodosApi
 {
@@ -12,36 +13,39 @@ internal static class TodosApi
     {
         var group = routes.MapGroup("/todos");
 
-        group.WithTags("Todos");
-
-        group.MapGet("/", () =>
+        // List all todos
+        group.MapGet("/", Ok<Todo[]> (int? offset, int? limit) =>
         {
-            return Results.Ok(todos);
+            return TypedResults.Ok(todos.Values.Skip(offset ?? 0).Take(limit ?? int.MaxValue).ToArray());
         });
 
-        group.MapGet("/{id}", (int id) =>
+        // Get a specific todo by id
+        group.MapGet("/{id}", Results<Ok<Todo>, NotFound<ProblemDetails>> (int id) =>
         {
-            if (!todos.ContainsKey(id))
+            if (todos.ContainsKey(id))
             {
-                return Results.NotFound();
+                return TypedResults.Ok(todos[id]);
             }
-            return Results.Ok(todos[id]);
+            return TypedResults.NotFound<ProblemDetails>(null);
         });
 
-        group.MapPut("/{id}", (int id, Todo Todo) =>
+        // Create or replace a new todo
+        group.MapPut("/{id}", Results<Ok<Todo>, Created<Todo>> (int id, Todo Todo) =>
         {
+            bool exists = todos.ContainsKey(id);
             todos[id] = Todo;
-            return Results.Ok(Todo);
+            return exists ? TypedResults.Ok(Todo) : TypedResults.Created($"/{id}", Todo);
         });
 
-        group.MapDelete("/{id}", (int id) =>
+        // Delete a todo
+        group.MapDelete("/{id}", Results<NoContent, NotFound<ProblemDetails>> (int id) =>
         {
-            if (!todos.ContainsKey(id))
+            if (todos.ContainsKey(id))
             {
-                return Results.NotFound();
+                todos.Remove(id);
+                return TypedResults.NoContent();
             }
-            todos.Remove(id);
-            return Results.NoContent();
+            return TypedResults.NotFound<ProblemDetails>(null);
         });
 
         return group;
