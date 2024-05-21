@@ -16,14 +16,18 @@ internal static class TodosApi
 
         group.WithTags("Todos");
 
-        group.MapGet("/", Ok<Todo[]> () =>
+        group.MapGet("/", Ok<Todo[]> (int? offset, int? limit) =>
         {
-            return TypedResults.Ok(todos.Values.ToArray());
+            return TypedResults.Ok(todos.Values.Skip(offset ?? 0).Take(limit ?? int.MaxValue).ToArray());
         })
         .WithName("ListTodos")
         .WithOpenApi(operation =>
         {
             operation.Description = "List all Todo items.";
+            var offsetParam = operation.Parameters.First(p => p.Name == "offset");
+            offsetParam.Description = "Offset of first item";
+            var limitParam = operation.Parameters.First(p => p.Name == "limit");
+            limitParam.Description = "Maximum number of items to return";
             return operation;
         });
 
