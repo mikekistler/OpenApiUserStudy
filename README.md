@@ -33,6 +33,10 @@ Add Spectral linting to the project as described in the
 
 This task requires enabling build-time generation of the OpenAPI document.
 
+### Task 4 - Add info and servers elements
+
+Write a document transformer to add the `info` and `servers` elements to the OpenAPI document.
+
 <!-- Links -->
 
 [documentation]: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis/aspnetcore-openapi
