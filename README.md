@@ -37,6 +37,10 @@ This task requires enabling build-time generation of the OpenAPI document.
 
 Write a document transformer to add the `info` and `servers` elements to the OpenAPI document.
 
+### Task 5 - Integrate Swagger UI
+
+Add Swagger UI to the project.
+
 <!-- Links -->
 
 [documentation]: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis/aspnetcore-openapi
