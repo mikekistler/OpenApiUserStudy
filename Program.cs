@@ -46,5 +46,13 @@ app.UseHttpsRedirection();
 app.MapTodos();
 
 app.MapOpenApi();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/openapi/v1.json", "v1");
+    });
+
+}
 
 app.Run();
