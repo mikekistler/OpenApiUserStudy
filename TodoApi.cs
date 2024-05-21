@@ -16,9 +16,9 @@ internal static class TodosApi
         group.WithTags("Todos");
 
         // List all todos
-        group.MapGet("/", Ok<Todo[]> () =>
+        group.MapGet("/", Ok<Todo[]> (int? offset, int? limit) =>
         {
-            return TypedResults.Ok(todos.Values.ToArray());
+            return TypedResults.Ok(todos.Values.Skip(offset ?? 0).Take(limit ?? int.MaxValue).ToArray());
         });
 
         // Get a specific todo by id
