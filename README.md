@@ -14,28 +14,24 @@ start devenv
 
 ## Tasks
 
-### Add OpenAPI support
+### Task 1 - Add OpenAPI support
 
 Using the [documentation], update the project to serve the
 OpenAPI document at the `/openapi/v1.json` endpoint.
 
+### Task 2 - Add features in OpenAPI document
 
+Add the following features to the OpenAPI document:
+- Add a `description` on each operation
+- Add an `operationId` on each operation
+- Add a `description` on each parameter
 
-## Add build-time generation of OpenAPI definition
+### Task 3 - Add Spectral linting
 
-Add the [`ApiDescription.Server`] package.
+Add Spectral linting to the project as described in the
+[documentation](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis/aspnetcore-openapi?view=aspnetcore-9.0&tabs=visual-studio#linting-generated-openapi-documents-with-spectral),
 
-```bash
-dotnet add package Microsoft.Extensions.ApiDescription.Server
-```
-
-and enable it in the project file.
-
-```xml
-  <PropertyGroup>
-    <OpenApiGenerateDocumentsOnBuild>true</OpenApiGenerateDocumentsOnBuild>
-  </PropertyGroup>
-```
+This task requires enabling build-time generation of the OpenAPI document.
 
 <!-- Links -->
 
